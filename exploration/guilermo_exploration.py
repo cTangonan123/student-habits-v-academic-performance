@@ -14,7 +14,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 
 
-df = pd.read_csv('../Pre-folder/refs/student_habits_performance.csv')
+df = pd.read_csv('./src/student_habits_performance.csv')
 
 
 df.describe()
