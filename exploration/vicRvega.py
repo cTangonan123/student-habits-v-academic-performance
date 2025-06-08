@@ -34,7 +34,7 @@ rcParams['figure.figsize'] = (8, 6)
 
 sns.set_style("whitegrid")
 
-df = pd.read_csv("/Users/victoria/Desktop/CSUMB/CST383/Project/student_habits_performance.csv")
+df = pd.read_csv("./src/student_habits_performance.csv")
 
 #Basic overview 
 df.shape

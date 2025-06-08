@@ -15,7 +15,7 @@ from scipy.stats import zscore
 
 # Objective: predict what how a student will do on a exam with given student habits
 #Explore what student habit contributes to poor student performance? 
-df = pd.read_csv('../Pre-folder/refs/student_habits_performance.csv', low_memory=False)
+df = pd.read_csv('./src/student_habits_performance.csv', low_memory=False)
 
 #Quick overview of data
 df.info()
