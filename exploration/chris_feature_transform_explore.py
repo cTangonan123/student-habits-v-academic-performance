@@ -610,3 +610,40 @@ plt.title("Best Model: Predicted vs True Exam Scores (Top Predictors)\nRMSE: {:.
 plt.grid()
 plt.tight_layout()
 plt.show()
+
+
+# Implementation of PolynomialFeatures
+from sklearn.preprocessing import PolynomialFeatures
+# Create polynomial features for the best predictors
+poly = PolynomialFeatures(degree=2, include_bias=False)
+X_poly = poly.fit_transform(X_best)
+# Split the data
+X_train_poly, X_test_poly, y_train_poly, y_test_poly = train_test_split(X_poly, y_best, test_size=0.3, random_state=42)
+# Scale the polynomial features
+scaler_poly = StandardScaler()
+X_train_poly = scaler_poly.fit_transform(X_train_poly)
+X_test_poly = scaler_poly.transform(X_test_poly)
+
+# Train a linear regression model with polynomial features
+poly_reg = LinearRegression()
+poly_reg.fit(X_train_poly, y_train_poly)
+y_poly_pred = poly_reg.predict(X_test_poly)
+# Evaluate the polynomial model
+rmse_poly = root_mean_squared_error(y_test_poly, y_poly_pred)
+r2_poly = r2_score(y_test_poly, y_poly_pred)
+print(f"Polynomial Model RMSE: {rmse_poly:.2f}, R²: {r2_poly:.3f}")
+# Plotting the polynomial model predictions
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test_poly, y_poly_pred, alpha=0.6)
+plt.plot([y_test_poly.min(), y_test_poly.max()], [y_test_poly.min(), y_test_poly.max()], 'k--', lw=2)
+plt.xlabel("True Exam Scores")
+plt.ylabel("Predicted Exam Scores (Polynomial Features)")
+plt.title("Polynomial Model: Predicted vs True Exam Scores\nRMSE: {:.2f}, R^2: {:.3f}".format(rmse_poly, r2_poly))
+plt.grid()
+plt.tight_layout()
+plt.show()
+# Summary of the best model
+print("Best Model Summary:")
+print(f"Predictors: {top_combo}")
+print(f"RMSE: {rmse_best:.2f}, R²: {r2_best:.3f}")
+print(f'{rmse_best/(df["exam_score"].max() - df["exam_score"].min()):.2%} of the range of exam_score')
