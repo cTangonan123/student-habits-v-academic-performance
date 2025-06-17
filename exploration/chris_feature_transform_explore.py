@@ -520,19 +520,20 @@ Linear Regression with either log or square root transformed study_hours_per_day
 
 import itertools
 from sklearn.metrics import root_mean_squared_error, r2_score
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, cross_validate
 
 
 predictors = ['study_hours_per_day', 'mental_health_rating', 'exercise_frequency', 
-              'sleep_hours', 'netflix_hours_log', 'social_media_hours']  # example predictors
-target = 'exam_score_reflected_boxcox'  # example target variable
+              'sleep_hours', 'netflix_hours', 'social_media_hours']  # example predictors
+target = 'exam_score'  # example target variable
 
 results = []
 
 for k in range(1, len(predictors)+1):
     for combo in itertools.combinations(predictors, k):
         #
-        X = df[list(combo)].values
+        p = list(combo)
+        X = df[p].values
         y = df[target].values
         sub_results = []
         
@@ -544,23 +545,31 @@ for k in range(1, len(predictors)+1):
 
         # Apply cross validation
         cv = KFold(n_splits=10, shuffle=True, random_state=42)
-        for train_idx, test_idx in cv.split(X_train):
-            X_cv_train, X_cv_test = X_train[train_idx], X_train[test_idx]
-            y_cv_train, y_cv_test = y_train[train_idx], y_train[test_idx]
-            model = LinearRegression()
-            model.fit(X_cv_train, y_cv_train)
-            y_cv_pred = model.predict(X_cv_test)
-            cv_rmse = root_mean_squared_error(y_cv_test, y_cv_pred)
-            cv_r2 = r2_score(y_cv_test, y_cv_pred)
-            sub_results.append({
-                'predictors': combo,
-                'rmse': cv_rmse,
-                'r2': cv_r2
-            })
+        # Initialize a linear regression model
+        model = LinearRegression()
+        # Perform cross-validation
+        cv_results = cross_validate(model, X_train, y_train, cv=cv, scoring=['neg_root_mean_squared_error', 'r2'], return_train_score=False)
+        # Calculate RMSE and R² from cross-validation results
+        cv_rmse = -cv_results['test_neg_root_mean_squared_error'].mean()
+        cv_r2 = cv_results['test_r2'].mean()
+
+        # for train_idx, test_idx in cv.split(X_train):
+        #     X_cv_train, X_cv_test = X_train[train_idx], X_train[test_idx]
+        #     y_cv_train, y_cv_test = y_train[train_idx], y_train[test_idx]
+        #     model = LinearRegression()
+        #     model.fit(X_cv_train, y_cv_train)
+        #     y_cv_pred = model.predict(X_cv_test)
+        #     cv_rmse = root_mean_squared_error(y_cv_test, y_cv_pred)
+        #     cv_r2 = r2_score(y_cv_test, y_cv_pred)
+        #     sub_results.append({
+        #         'predictors': combo,
+        #         'rmse': cv_rmse,
+        #         'r2': cv_r2
+        #     })
         results.append({
             'predictors': combo,
-            'rmse-mean': np.mean([res['rmse'] for res in sub_results]),
-            'r2-mean': np.mean([res['r2'] for res in sub_results])
+            'rmse-mean': cv_rmse,
+            'r2-mean': cv_r2
         })
         # model = LinearRegression()
         # model.fit(X_train, y_train)
@@ -610,3 +619,40 @@ plt.title("Best Model: Predicted vs True Exam Scores (Top Predictors)\nRMSE: {:.
 plt.grid()
 plt.tight_layout()
 plt.show()
+
+
+# Implementation of PolynomialFeatures
+from sklearn.preprocessing import PolynomialFeatures
+# Create polynomial features for the best predictors
+poly = PolynomialFeatures(degree=2, include_bias=False)
+X_poly = poly.fit_transform(X_best)
+# Split the data
+X_train_poly, X_test_poly, y_train_poly, y_test_poly = train_test_split(X_poly, y_best, test_size=0.3, random_state=42)
+# Scale the polynomial features
+scaler_poly = StandardScaler()
+X_train_poly = scaler_poly.fit_transform(X_train_poly)
+X_test_poly = scaler_poly.transform(X_test_poly)
+
+# Train a linear regression model with polynomial features
+poly_reg = LinearRegression()
+poly_reg.fit(X_train_poly, y_train_poly)
+y_poly_pred = poly_reg.predict(X_test_poly)
+# Evaluate the polynomial model
+rmse_poly = root_mean_squared_error(y_test_poly, y_poly_pred)
+r2_poly = r2_score(y_test_poly, y_poly_pred)
+print(f"Polynomial Model RMSE: {rmse_poly:.2f}, R²: {r2_poly:.3f}")
+# Plotting the polynomial model predictions
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test_poly, y_poly_pred, alpha=0.6)
+plt.plot([y_test_poly.min(), y_test_poly.max()], [y_test_poly.min(), y_test_poly.max()], 'k--', lw=2)
+plt.xlabel("True Exam Scores")
+plt.ylabel("Predicted Exam Scores (Polynomial Features)")
+plt.title("Polynomial Model: Predicted vs True Exam Scores\nRMSE: {:.2f}, R^2: {:.3f}".format(rmse_poly, r2_poly))
+plt.grid()
+plt.tight_layout()
+plt.show()
+# Summary of the best model
+print("Best Model Summary:")
+print(f"Predictors: {top_combo}")
+print(f"RMSE: {rmse_best:.2f}, R²: {r2_best:.3f}")
+print(f'{rmse_best/(df["exam_score"].max() - df["exam_score"].min()):.2%} of the range of exam_score')
