@@ -93,12 +93,11 @@ X_test_poly = poly.transform(X_test)
 
 # Fit a linear regression model
 regr = LinearRegression()
-regr.fit(X_train_poly, y_train)
+regr.fit(X_train_poly, y_train_transformed)
 
 # Make predictions on the test set
-# y_pred_transformed = regr.predict(X_test)
-# y_pred = inverse_reflective_boxcox_transform(y_pred_transformed, lambda_value, max_value)
-y_pred = regr.predict(X_test_poly)
+y_pred_transformed = regr.predict(X_test_poly)
+y_pred = inv_boxcox(y_pred_transformed, lambda_value)  # Transform predictions back to original scale
 
 # Calculate RMSE and R^2 (both y_test and y_pred are in the original scale)
 rmse = root_mean_squared_error(y_test, y_pred)
