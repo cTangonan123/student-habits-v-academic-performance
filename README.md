@@ -22,7 +22,7 @@ Students usually have busy lives while enrolled in school. Many of their habits 
 ## Selection of Data
 We will be using the “Student Habits vs Academic Performance” dataset, which was obtained from Kaggle. It was downloaded on May 25th at 7:30 p.m., and the last update was approximately a month prior to our download. The author of the data is Jayantha Nath. The data is simulated, consisting of 1000 synthetic student records. There are a total of 1000 rows and 16 columns. Each student is assigned a unique student ID, along with their age and gender, to identify them in columns 0, 1, and 2. Columns 3 through 14 represent the habits that students can partake in that can affect their exam scores. These habits range from the hours spent studying to the number of hours spent watching Netflix.  Exam scores are given in the last column. After preprocessing the data, we noticed that there were 91 missing values for the categorical column, `parental_education_level`. These values were replaced with the value `unknown`. We also noticed that outliers existed in the columns `study_hours_per_day` and `social_media_hours`.
 
-### Characteristics of data:
+### Characteristics of Data:
 *   The dataset has a total of 16 columns.
 *   Each student is assigned a unique student ID, along with their age and gender.
 *   Columns 3 through 14 represent the habits that students can partake in that can affect their exam scores.
