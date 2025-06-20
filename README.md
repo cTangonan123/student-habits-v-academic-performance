@@ -3,6 +3,7 @@
 
 | Table of Contents                                          |
 | ---------------------------------------------------------- |
+| [Video Link](#Video-Link)                                  |
 | [Introduction](#introduction)                              |
 | [Selection of Data](#selection-of-data)                    |
 | [Characteristics of data](#characteristics-of-data)         |
@@ -16,6 +17,10 @@
 | [References](#references)                                  |
 
 ---
+# Video Link
+
+[Click here for a link to the video](https://drive.google.com/file/d/1RBobGphG6DiyBYVHHQISAqVzrHHZ-gDg/view?usp=sharing)
+
 # Introduction
 Students usually have busy lives while enrolled in school. Many of their habits can impact their performance in class, especially when taking an exam. In this project, we aim to determine a relationship between a student’s habits and potentially predict their exam score based on those habits. Habits, such as a student's sleep hours, study time, attendance percentage, exercise frequency, and extracurricular participation, will be analyzed. We will be using the [Student Habits vs Academic Performance](https://www.kaggle.com/datasets/jayaantanaath/student-habits-vs-academic-performance) (Nath, 2025) dataset from Kaggle. First, we’ll load and clean the data using pandas (checking for nulls and performing basic sanity checks), then explore relationships using matplotlib (histograms, scatterplots, and correlation). As we complete additional class modules on data wrangling, kNN, and linear regression, we expect to utilize further methods to analyze our data more effectively and predict student performance. We will interpret the results to answer our question about the relationship between the students' habits and their final score performance.
 
