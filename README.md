@@ -51,8 +51,8 @@ In the three models mentioned above, we compared the Root Mean Squared Error (RM
 | Model | RMSE | R-squared |
 | --- | --- | --- |
 | KNN Regression | 7.37 | - |
-| Linear Regression | 5.03 | 0.909 |
-| Polynomial Regression | 4.92 | 0.92 |
+| Linear Regression | 5.30 | 0.899 |
+| Polynomial Regression | 5.11 | 0.911 |
 
 For the KNN Regression model, we used the top three features: 
 - `study_hours_per_day`
@@ -69,13 +69,13 @@ For the linear regression model, we tested combinations of all numerical columns
 - `sleep_hours`
 - `exercise_frequency`
 - `mental_health_rating`
-- `high_score` (column created from binarizing the exam performance at the median)
 
-When evaluated using the model, we found an R-squared value of 0.909 and an RMSE of 5.03, indicating that the model’s predictions are off by approximately 5.03 points on average, and 92% of the variance in exam scores is explained by the model. Compared to the KNN Regression model, this was an improvement.
 
-For the Polynomial Regression, we used the same top features mentioned above with a degree of 2. Our model produced an R-squared value of 0.92 and an RMSE of 4.92. The R-squared value matched that of the KNN model, but the RMSE decreased, thereby reducing the error in the model’s predictions. 
+When evaluated using the model, we found an R-squared value of 0.899 and an RMSE of 5.30, indicating that the model’s predictions are off by approximately 5.30 points on average, and 90% of the variance in exam scores is explained by the model. Compared to the KNN Regression model, this was an improvement.
 
-Based on our evaluation metrics, the polynomial regression model was the most accurate, as it had the lowest Root Mean Squared Error (RMSE) and the highest R-squared. Our second-best model would be Linear Regression, followed by KNN Regression. With this model, we can use the intercept and the 44 coefficients to create a function that predicts a student's exam score based on given information about their habits.
+For the Polynomial Regression, we used the same top features mentioned above with a degree of 2. Our model produced an R-squared value of 0.911 and an RMSE of 5.11. The R-squared value matched that of the KNN model, but the RMSE decreased, thereby reducing the error in the model’s predictions. 
+
+Based on our evaluation metrics, the polynomial regression model was the most accurate, as it had the lowest Root Mean Squared Error (RMSE) and the highest R-squared. Our second-best model would be Linear Regression, followed by KNN Regression. With this model, we can use the intercept and the 35 coefficients to create a function that predicts a student's exam score based on given information about their habits.
 
 ## Discussion
 Polynomial Regression proved to be the most accurate model for predicting exam scores. This is likely due to its ability to capture nonlinear patterns among features that individually have weak relationships with the target variable, `exam_scores`, with the exception of `study_hours_per_day`, which showed a strong linear correlation. Given the overall weak linear relationships in the dataset, Polynomial Regression was better suited than Linear Regression or KNN Regression for modeling these more complex interactions.
@@ -92,7 +92,7 @@ If given more time or access to a larger dataset, we could have explored additio
 *   Adding the category of study strategy would be a valuable feature to use as a predictor in future research.
 
 ## Summary
-The most important finding from our research is that Polynomial Regression was the most effective model for predicting student exam scores. It outperformed both Linear Regression and KNN Regression, with it having the lowest RMSE (4.92) and the highest R-squared value (0.92). This suggests that nonlinear relationships between study habits and academic performance are significant and better captured by a polynomial model. These results underscore the importance of considering complex patterns, such as interactions and nonlinear trends, when modeling student success.
+The most important finding from our research is that Polynomial Regression was the most effective model for predicting student exam scores. It outperformed both Linear Regression and KNN Regression, with it having the lowest RMSE (5.11) and the highest R-squared value (0.911). This suggests that nonlinear relationships between study habits and academic performance are significant and better captured by a polynomial model. These results underscore the importance of considering complex patterns, such as interactions and nonlinear trends, when modeling student success.
 
 ---
 ### References:
