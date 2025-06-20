@@ -97,7 +97,7 @@ The most important finding from our research is that Polynomial Regression was t
 ---
 ### References:
 - Walck-Shannon, E. M., Rowell, S. F., & Frey, R. F. (2021, March). *To what extent do study habits relate to performance?*. CBE life sciences education. [https://pmc.ncbi.nlm.nih.gov/articles/PMC8108503/](https://pmc.ncbi.nlm.nih.gov/articles/PMC8108503/)
-- Nath, J. (2025, April 12). *Student habits vs academic performance*. Kaggle. [https://www.kaggle.com/datasets/jayaantanaath/student-habits-vs-academic-performance] 
+- Nath, J. (2025, April 12). *Student habits vs academic performance*. Kaggle. [https://www.kaggle.com/datasets/jayaantanaath/student-habits-vs-academic-performance](https://www.kaggle.com/datasets/jayaantanaath/student-habits-vs-academic-performance) 
 
 
 
